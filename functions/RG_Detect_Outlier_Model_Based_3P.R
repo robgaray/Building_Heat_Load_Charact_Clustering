@@ -5,10 +5,22 @@ RG_Changepoint_Three_Parameters_FUN_OBJETIVO<- function (slope_Temp, slope_Irrad
 
 RG_Detect_Outlier_Model_Based_Ch_3P <- function (DF_input, threshold_outlier=2, pop_size= 100, max_iter=1000)
 {
+  irrad_max <- max(DF_input$Solar.Irradiation, na.rm = TRUE)
+  if (is.na(irrad_max) || irrad_max == 0) {
+    irrad_max <- 1
+  }
+  
   slope_Temp_MIN  <- -max(DF_input$Power)/(max(DF_input$Temperature)-min(DF_input$Temperature))
   slope_Irrad_MIN <- -max(DF_input$Power)/max(DF_input$Solar.Irradiation)
   intercept_MAX   <- max(DF_input$Power)
   minimum_MAX     <- max(DF_input$Power)
+  
+  if (slope_Temp_MIN+slope_Irrad_MIN+intercept_MAX+minimum_MAX == 0 || max(DF_input$Power, na.rm = TRUE) == 0){
+    # Return zero parameters directly instead of running optimization
+    DF_Output <- RG_Changepoint_Three_Parameters(0, 0, 0, 0, DF_input)
+    DF_Output$IS_Outlier <- rep(FALSE, nrow(DF_Output))
+    return(list(DF_Output, c(0, 0, 0, 0)))
+  }
   
   optimizado <- ga(
     type    = "real-valued",
@@ -26,6 +38,10 @@ RG_Detect_Outlier_Model_Based_Ch_3P <- function (DF_input, threshold_outlier=2, 
   )
   
   parameters_OPT  <- optimizado@solution
+  
+  if (is.matrix(parameters_OPT)) {
+    parameters_OPT <- parameters_OPT[1, ]
+  }
   
   slope_Temp_OPT  <- optimizado@solution[1]
   slope_Irrad_OPT <- optimizado@solution[2]
