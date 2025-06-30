@@ -50,6 +50,12 @@ The main novelty over the previous work is how I develop pattern identification 
 
 Obviously, this could not have been possible without my discussions and works with (in chronological order) Beñat Arregi, Mikel Lumbreras, Antonio Garrido, Markel Eguizabal, Ivan Flores, Olaia Eguiarte, Alaeddine Hajri, Marie Parant, Juan Manuel Lopez Garde, Iñigo Lopez, Talha Siddique, Angelo Zarrela, Nicola Borgato... If I had to select the key people, Beñat and Mikel have been there since the beginning, but everyone has collaborated with its bit to shape my approach to heat load modeling. I have probably discussed these methods with several other researchers in the course of the last years, but I sincerely can not remember with whom. To all of you, thank you.
 
+# Contributions
+
+Currently >99% of the code is mine. With some from ChatGPT.
+
+I shared this code with Aitor Diez (https://github.com/aitorDiezMateo) for some side activities. And there he found a few bugs. So some minor corrections in 2025/06 are based on his feedback. Thanks!
+
 # Context evolution
 
 The method proposed here takes its roots in methods such as PRISM (1970-80s)and ASHRAE changepoint (1990s). I initiated these kind of analysis around 2015. Most of the datasets I use now are less than 5 years old.
